@@ -5,7 +5,7 @@
   "description": "Simulate ransomware and primary IdP outages with immutable R2 Object Lock, 2-of-2 break-glass quorum, and live RTO/RPO scoring.",
   "repo": "c2pig/0trust-lab-resilience-tabletop",
   "routePath": "/resilience-tabletop",
-  "standaloneUrl": "https://resilience-tabletop.lab.0trust.dev",
+  "standaloneUrl": "https://lab.0trust.dev/resilience-tabletop",
   "localDevPort": 5177,
   "archetype": "B",
   "seats": [
