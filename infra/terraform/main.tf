@@ -7,7 +7,7 @@ module "resilience_tabletop_lab" {
   cloudflare_zone_id    = var.cloudflare_zone_id
   state_kv_namespace_id = var.state_kv_namespace_id
   pages_project_name    = "0trust-lab-resilience-tabletop"
-  subdomain_prefix      = "resilience-tabletop.lab"
+  subdomain_prefix      = "lab-resilience-tabletop"
 
   plain_env_vars = {
     ENVIRONMENT = var.environment
