@@ -1,0 +1,39 @@
+{
+  "id": "resilience-tabletop",
+  "title": "Chaos & Cyber Resilience Tabletop Simulator",
+  "domainLabel": "Cyber Resilience",
+  "description": "Simulate ransomware and primary IdP outages with immutable R2 Object Lock, 2-of-2 break-glass quorum, and live RTO/RPO scoring.",
+  "repo": "c2pig/0trust-lab-resilience-tabletop",
+  "routePath": "/resilience-tabletop",
+  "standaloneUrl": "https://resilience-tabletop.lab.0trust.dev",
+  "localDevPort": 5177,
+  "archetype": "B",
+  "seats": [
+    {
+      "id": "sre-war-room",
+      "persona": "Alex Rivera",
+      "roleLabel": "SRE · Failover War Room",
+      "appLabel": "Chaos & Recovery War Room"
+    },
+    {
+      "id": "ciso-cosigner",
+      "persona": "Morgan Vance",
+      "roleLabel": "CISO · Out-of-Band FIDO2 Co-Signer",
+      "appLabel": "2-of-2 Break-Glass Hardware Vault"
+    }
+  ],
+  "apiEndpoints": [
+    "/api/resilience/probe-delete"
+  ],
+  "kvPrefixes": [
+    "lab9:resilience:"
+  ],
+  "infraDependencies": [
+    "managed-infrastructure/modules/cloudflare-pages-lab",
+    "Cloudflare R2 Object Lock (COMPLIANCE)"
+  ],
+  "diagrams": {
+    "localArchitectureMd": "docs/ARCHITECTURE.md",
+    "zoominSvg": "docs/diagrams/resilience_tabletop_architecture.svg"
+  }
+}

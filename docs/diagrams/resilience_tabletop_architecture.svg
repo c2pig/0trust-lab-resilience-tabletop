@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif">
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+    <marker id="arr-emerald" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669" />
+    </marker>
+    <marker id="arr-crimson" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626" />
+    </marker>
+    <marker id="arr-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#475569" />
+    </marker>
+  </defs>
+
+  <!-- Canvas -->
+  <rect width="1200" height="760" fill="#f8fafc" />
+
+  <!-- Header -->
+  <text x="40" y="40" fill="#0f172a" font-size="20" font-weight="700">Lab 9 Architecture — Chaos &amp; Cyber Resilience Tabletop Simulator (/resilience-tabletop)</text>
+  <text x="40" y="62" fill="#64748b" font-size="13">Archetype B: 2-Seat Incident War Room (SRE ↔ CISO FIDO2) · POST /api/resilience/probe-delete · R2 WORM (403) · Sticky X-Ray Drawer</text>
+
+  <!-- ====================================================================== -->
+  <!-- STAGE 1: 2-SEAT WAR ROOM & CRISIS INJECTION -->
+  <!-- ====================================================================== -->
+  <rect x="40" y="88" width="350" height="390" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="58" y="104" width="280" height="22" rx="4" fill="#fef2f2" />
+  <text x="68" y="119" fill="#991b1b" font-size="11" font-weight="700">PHASE 1 · 2-SEAT WAR ROOM &amp; BLAST RADIUS</text>
+
+  <rect x="58" y="140" width="314" height="92" rx="8" fill="#eff6ff" stroke="#bfdbfe" />
+  <text x="72" y="162" fill="#1e40af" font-size="13" font-weight="700">2-Seat RoleSwitcherBar (Archetype B)</text>
+  <text x="72" y="180" fill="#1e3a8a" font-size="11.5">• Seat 1: Alex Rivera (SRE · Failover War Room)</text>
+  <text x="72" y="196" fill="#1e3a8a" font-size="11.5">• Seat 2: Morgan Vance (CISO · FIDO2 Co-Signer)</text>
+  <text x="72" y="216" fill="#2563eb" font-size="10.5" font-family="monospace">repo: c2pig/0trust.dev · RoleSwitcherBar.tsx</text>
+
+  <rect x="58" y="248" width="314" height="106" rx="8" fill="#f8fafc" stroke="#cbd5e1" />
+  <text x="72" y="270" fill="#0f172a" font-size="13" font-weight="700">5-Tier Blast Radius &amp; Crisis Scenarios</text>
+  <text x="72" y="288" fill="#475569" font-size="11.5">Ransomware DB · Region + IdP 503 · Insider Tamper</text>
+  <text x="72" y="304" fill="#475569" font-size="11.5">Primary DB · IdP · App Edge · R2 Vault · Standby</text>
+  <text x="72" y="324" fill="#d97706" font-size="11" font-weight="600">Vulnerable Stage 2 Defaults (Safe-to-Fail Traps)</text>
+  <text x="72" y="344" fill="#2563eb" font-size="10.5" font-family="monospace">repo: c2pig/0trust.dev · src/contracts/</text>
+
+  <rect x="58" y="370" width="314" height="90" rx="8" fill="#fef2f2" stroke="#fecaca" />
+  <text x="72" y="392" fill="#991b1b" font-size="12.5" font-weight="700">Red-Team Triggers (9A / 9B / 9C)</text>
+  <text x="72" y="410" fill="#7f1d1d" font-size="11.5">9A: POST /api/resilience/probe-delete (403 WORM)</text>
+  <text x="72" y="426" fill="#7f1d1d" font-size="11.5">9B: IdP 503 + Single-Admin / 1-of-2 Bypass (403)</text>
+  <text x="72" y="442" fill="#7f1d1d" font-size="11.5">9C: Unlocked GOVERNANCE + Cold Rebuild (BREACH)</text>
+
+  <!-- Connector Stage 1 -> Stage 2 -->
+  <line x1="390" y1="280" x2="425" y2="280" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)" />
+
+  <!-- ====================================================================== -->
+  <!-- STAGE 2: RECOVERY & CONTAINMENT CONTROLS -->
+  <!-- ====================================================================== -->
+  <rect x="425" y="88" width="370" height="390" rx="12" fill="#ffffff" stroke="#10b981" stroke-width="1.5" />
+  <rect x="443" y="104" width="310" height="22" rx="4" fill="#ecfdf5" />
+  <text x="453" y="119" fill="#047857" font-size="11" font-weight="700">PHASES 2–3 · EDGE WORM PROBE &amp; 2-OF-2 FAILOVER</text>
+
+  <!-- Gate 1: R2 Object Lock -->
+  <rect x="443" y="140" width="334" height="96" rx="8" fill="#ecfdf5" stroke="#a7f3d0" />
+  <text x="457" y="162" fill="#065f46" font-size="13" font-weight="700">Gate 1: POST /api/resilience/probe-delete</text>
+  <text x="457" y="180" fill="#047857" font-size="11.5">R2 COMPLIANCE (30d WORM · RPO 5m vs 1440m Trap)</text>
+  <text x="457" y="198" fill="#dc2626" font-size="11" font-weight="700">DELETE → 403 ObjectLockComplianceViolation</text>
+  <text x="457" y="224" fill="#2563eb" font-size="10.5" font-family="monospace">functions/api/resilience/probe-delete.ts (KV 1h)</text>
+
+  <!-- Gate 2: Warm-Standby -->
+  <rect x="443" y="248" width="334" height="96" rx="8" fill="#f8fafc" stroke="#cbd5e1" />
+  <text x="457" y="270" fill="#0f172a" font-size="13" font-weight="700">Gate 2: Warm-Standby Failover Quorum</text>
+  <text x="457" y="288" fill="#475569" font-size="11.5">Quorum &gt;= 2 consecutive failed probes (vs 1 Trap)</text>
+  <text x="457" y="306" fill="#059669" font-size="11" font-weight="600">Promotes us-west-2 (RTO +12m vs +240m Cold)</text>
+  <text x="457" y="332" fill="#2563eb" font-size="10.5" font-family="monospace">repo: c2pig/0trust.dev · infra/terraform/</text>
+
+  <!-- Gate 3: Break-Glass -->
+  <rect x="443" y="356" width="334" height="104" rx="8" fill="#eff6ff" stroke="#bfdbfe" />
+  <text x="457" y="378" fill="#1e40af" font-size="13" font-weight="700">Gate 3: 2-of-2 FIDO2 CISO Co-Sign (Seat 2)</text>
+  <text x="457" y="396" fill="#1e3a8a" font-size="11.5">SRE (1/2) + CISO Out-of-Band FIDO2 (2/2 · 15m TTL)</text>
+  <text x="457" y="414" fill="#dc2626" font-size="11" font-weight="700">1-of-2 / Bypass → 403 BREAK_GLASS_QUORUM_REQUIRED</text>
+  <text x="457" y="444" fill="#2563eb" font-size="10.5" font-family="monospace">repo: c2pig/0trust.dev · ResilienceTabletopPage.tsx</text>
+
+  <!-- Connector Stage 2 -> Stage 3 -->
+  <line x1="795" y1="280" x2="830" y2="280" stroke="#059669" stroke-width="2" marker-end="url(#arr-emerald)" />
+
+  <!-- ====================================================================== -->
+  <!-- STAGE 3: DETERMINISTIC SCORECARD & TIMELINE -->
+  <!-- ====================================================================== -->
+  <rect x="830" y="88" width="330" height="390" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="1.5" />
+  <rect x="848" y="104" width="285" height="22" rx="4" fill="#eff6ff" />
+  <text x="858" y="119" fill="#1d4ed8" font-size="11" font-weight="700">PHASE 4 · RTO/RPO SCORECARD &amp; DEBRIEF</text>
+
+  <rect x="848" y="140" width="294" height="130" rx="8" fill="#f8fafc" stroke="#cbd5e1" />
+  <text x="862" y="162" fill="#0f172a" font-size="13" font-weight="700">evaluateTabletopOutcome()</text>
+  <text x="862" y="182" fill="#059669" font-size="11.5" font-weight="600">PLATINUM: RTO 20m (&lt;=30m), RPO 5m, 100/100</text>
+  <text x="862" y="200" fill="#d97706" font-size="11.5" font-weight="600">GOLD: RTO &lt;= 60m, RPO &lt;= 60m, Score &gt;= 65</text>
+  <text x="862" y="218" fill="#dc2626" font-size="11.5" font-weight="600">BREACH: Unlocked R2 / Cold Rebuild / 1-of-2</text>
+  <text x="862" y="256" fill="#2563eb" font-size="10.5" font-family="monospace">repo: c2pig/0trust.dev · resilienceTabletopEngine.ts</text>
+
+  <rect x="848" y="286" width="294" height="174" rx="8" fill="#f8fafc" stroke="#cbd5e1" />
+  <text x="862" y="308" fill="#0f172a" font-size="13" font-weight="700">Chronological Timeline &amp; Reflection</text>
+  <text x="862" y="328" fill="#475569" font-size="11.5">• T+0m DETECTION → T+2m CONTAINMENT (R2)</text>
+  <text x="862" y="346" fill="#475569" font-size="11.5">• T+4m 2-OF-2 FIDO2 → T+6m WARM-STANDBY</text>
+  <text x="862" y="364" fill="#475569" font-size="11.5">• T+20m VERIFICATION (Sorted Ascending T+)</text>
+  <text x="862" y="390" fill="#0f172a" font-size="11.5" font-weight="600">Phase 4 Reflection Debrief (5/5 Traps)</text>
+  <text x="862" y="446" fill="#2563eb" font-size="10.5" font-family="monospace">repo: c2pig/0trust.dev · ResilienceTabletopPage.tsx</text>
+
+  <!-- ====================================================================== -->
+  <!-- BOTTOM: STICKY X-RAY TELEMETRY DRAWER & EDGE STATE_KV -->
+  <!-- ====================================================================== -->
+  <line x1="215" y1="478" x2="215" y2="520" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-slate)" />
+  <line x1="610" y1="478" x2="610" y2="520" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-slate)" />
+  <line x1="995" y1="478" x2="995" y2="520" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-slate)" />
+
+  <rect x="40" y="520" width="1120" height="200" rx="12" fill="#0f172a" />
+  <rect x="60" y="538" width="440" height="22" rx="4" fill="#1e293b" />
+  <text x="72" y="553" fill="#fbbf24" font-size="11" font-weight="700">STICKY BOTTOM X-RAY TELEMETRY DRAWER &amp; EDGE STATE_KV (1H TTL)</text>
+
+  <rect x="60" y="576" width="340" height="122" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="76" y="598" fill="#f8fafc" font-size="13" font-weight="700">Tab 1: Security Audit Feed</text>
+  <text x="76" y="618" fill="#94a3b8" font-size="11.5" font-family="monospace">POST /api/resilience/probe-delete</text>
+  <text x="76" y="636" fill="#94a3b8" font-size="11.5" font-family="monospace">traceparent: 00-&lt;32hex&gt;-&lt;16hex&gt;-01</text>
+  <text x="76" y="676" fill="#38bdf8" font-size="10.5" font-family="monospace">repo: c2pig/0trust.dev · XRayTelemetryDrawer.tsx</text>
+
+  <rect x="420" y="576" width="360" height="122" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="436" y="598" fill="#f8fafc" font-size="13" font-weight="700">Tab 2: Live Decoded Proof</text>
+  <text x="436" y="618" fill="#34d399" font-size="11.5" font-family="monospace">R2_IMMUTABILITY_HELD (403 WORM Proof)</text>
+  <text x="436" y="636" fill="#34d399" font-size="11.5" font-family="monospace">BREAK_GLASS_INVOKED (2-of-2 FIDO2)</text>
+  <text x="436" y="654" fill="#f87171" font-size="11.5" font-family="monospace">BREAK_GLASS_DENIED (403) / R2_UNLOCKED_RISK</text>
+  <text x="436" y="676" fill="#38bdf8" font-size="10.5" font-family="monospace">repo: c2pig/0trust.dev · decodedProofSections</text>
+
+  <rect x="800" y="576" width="340" height="122" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="816" y="598" fill="#f8fafc" font-size="13" font-weight="700">STATE_KV Isolation (1h TTL)</text>
+  <text x="816" y="618" fill="#94a3b8" font-size="11.5" font-family="monospace">key: lab9:resilience:&lt;sessionId&gt;</text>
+  <text x="816" y="636" fill="#94a3b8" font-size="11.5">expirationTtl: 3600 + Vite Dev Fallback</text>
+  <text x="816" y="676" fill="#38bdf8" font-size="10.5" font-family="monospace">repo: c2pig/0trust.dev · $0.00 Sandbox</text>
+</svg>
