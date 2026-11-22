@@ -87,3 +87,10 @@ flowchart TB
    - `GOLD`: `RTO <= 60m`, `RPO <= 60m`, `score >= 65`
    - `BREACH`: Any configuration failing Gold thresholds.
    - `post_incident_timeline` is strictly sorted by ascending `t_plus_minutes` (`+0m DETECTION` → `+2m CONTAINMENT (R2)` → `+4m CONTAINMENT (2-of-2 FIDO2)` → `+6m RECOVERY (Warm-Standby)` → `+20m VERIFICATION`).
+
+---
+
+## Automated Hub Sync & Shell Parity
+- **Standalone Route**: Served at `https://lab.0trust.dev/resilience-tabletop` via `0trust-lab-router` (`c2pig/0trust.dev`).
+- **Hub Dispatch (`.github/workflows/sync-to-hub.yml`)**: Fires a `repository_dispatch` (`event_type: lab_contract_updated`) to `c2pig/0trust.dev` whenever `lab.manifest.json` or `docs/diagrams/*.svg` changes on `main`.
+- **Shared Shell (`@0trust/lab-shell`)**: `RoleSwitcherBar.tsx`, `XRayTelemetryDrawer.tsx`, `src/shell/index.ts`, and `src/index.css` are kept in parity with `c2pig/0trust.dev` via `scripts/sync-lab-shell.mjs`.
