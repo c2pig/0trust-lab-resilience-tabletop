@@ -158,3 +158,5 @@ flowchart TB
 - **Layer 1 (`tests/server.test.ts`)**: Cloud Run Hono adapter, `X-Lab-Router-Secret` fail-closed `403`, `X-Forwarded-Host` validation, `MemoryKvAdapter` / `FirestoreKvAdapter` TTL, telemetry redaction, `413 PAYLOAD_TOO_LARGE`, and `400 INVALID_JSON`.
 - **Layer 2 (`tests/api.test.ts`)**: Direct route testing of `functions/api/resilience/probe-delete.ts` with `MemoryKvAdapter` covering `GOVERNANCE`/`NONE` (`200`), `COMPLIANCE` (`403 R2_IMMUTABILITY_HELD`), `413`/`400` fail-closed validation, and per-session `STATE_KV` isolation.
 - **Layer 3 (`tests/engine.test.ts`, `tests/selectors.test.ts`)**: Pure DOM-free UI selectors extracted to `src/engine/resilienceTabletopSelectors.ts` (wired into `src/hooks/useResilienceTabletop.ts`) and deterministic engine invariants in `src/engine/resilienceTabletopEngine.ts` (R2 Object Lock, 2-of-2 Break-Glass dual-custody, scorecard & post-incident report).
+
+- **Lease-Boundary Lifecycle (`LabLeaseGuard`)**: Synced `src/components/LabLeaseGuard.tsx` with `onLeaseEnded?: () => void` callback invoked on **End Lab** (`handleRelease()`) and lease expiry transitions.
