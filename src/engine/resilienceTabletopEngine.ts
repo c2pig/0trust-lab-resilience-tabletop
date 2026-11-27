@@ -402,7 +402,7 @@ export async function probeR2ObjectLockApi(
     state.choices.backup_mode === 'R2_OBJECT_LOCK_COMPLIANCE' ? 'COMPLIANCE' : 'GOVERNANCE';
   const startPerf = performance.now();
 
-  if (typeof window !== 'undefined' && resilienceEdgeApiAvailable === null) {
+  if (typeof (globalThis as Record<string, unknown>).window !== 'undefined' && resilienceEdgeApiAvailable === null) {
     try {
       const probe = await fetch('/api/state', { method: 'GET' });
       const probeCt = probe.headers.get('Content-Type') || '';
@@ -412,7 +412,7 @@ export async function probeR2ObjectLockApi(
     }
   }
 
-  if (!(typeof window !== 'undefined' && resilienceEdgeApiAvailable === false)) {
+  if (!(typeof (globalThis as Record<string, unknown>).window !== 'undefined' && resilienceEdgeApiAvailable === false)) {
     try {
       const res = await fetch('/api/resilience/probe-delete', {
       method: 'POST',

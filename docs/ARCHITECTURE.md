@@ -151,3 +151,10 @@ flowchart TB
 - **Terraform PR CI Validation (`.github/workflows/ci.yml`)**: Added a least-privilege `terraform-validate` job (`terraform_version: "1.11.4"`) executing `terraform fmt -check`, `terraform init -backend=false -input=false`, and `terraform validate` on every pull request targeting `main`.
 
 - **X-Ray Telemetry Drawer Theme**: Uses Chrome DevTools Light Mode palette (`#ffffff` / `#f1f3f4` surfaces, `#dadce0` borders, `#202124` / `#5f6368` text, `#1a73e8` active indicators) for high-contrast readability.
+
+---
+
+## 3-Layer Unit Testing Architecture (`tsx --test` / `node:test`)
+- **Layer 1 (`tests/server.test.ts`)**: Cloud Run Hono adapter, `X-Lab-Router-Secret` fail-closed `403`, `X-Forwarded-Host` validation, `MemoryKvAdapter` / `FirestoreKvAdapter` TTL, telemetry redaction, `413 PAYLOAD_TOO_LARGE`, and `400 INVALID_JSON`.
+- **Layer 2 (`tests/api.test.ts`)**: Direct route testing of `functions/api/resilience/probe-delete.ts` with `MemoryKvAdapter` covering `GOVERNANCE`/`NONE` (`200`), `COMPLIANCE` (`403 R2_IMMUTABILITY_HELD`), `413`/`400` fail-closed validation, and per-session `STATE_KV` isolation.
+- **Layer 3 (`tests/engine.test.ts`, `tests/selectors.test.ts`)**: Pure DOM-free UI selectors extracted to `src/engine/resilienceTabletopSelectors.ts` (wired into `src/hooks/useResilienceTabletop.ts`) and deterministic engine invariants in `src/engine/resilienceTabletopEngine.ts` (R2 Object Lock, 2-of-2 Break-Glass dual-custody, scorecard & post-incident report).
