@@ -356,4 +356,45 @@ describe('Lab 9 (Resilience Tabletop) Cloud Run Adapter — Security & /api/resi
     );
     assert.equal(wrongPrefixRes.status, 404);
   });
+
+  it('rejects >64 KB JSON body with 413 PAYLOAD_TOO_LARGE and malformed JSON with 400 INVALID_JSON', async () => {
+    const app = createCloudRunApp({
+      env: {
+        ENVIRONMENT: 'production',
+        LAB_SLUG: 'resilience-tabletop',
+        LAB_ROUTER_SECRET: TEST_ROUTER_SECRET
+      },
+      kv: new MemoryKvAdapter({ labSlug: 'resilience-tabletop' })
+    });
+
+    const oversizedBody = JSON.stringify({
+      attempted_action: 'DELETE',
+      object_lock_mode: 'COMPLIANCE',
+      padding: 'x'.repeat(65 * 1024)
+    });
+
+    const res413 = await app.request('http://127.0.0.1:8080/api/resilience/probe-delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Lab-Router-Secret': TEST_ROUTER_SECRET
+      },
+      body: oversizedBody
+    });
+    assert.equal(res413.status, 413);
+    const body413 = (await res413.json()) as { error: string };
+    assert.equal(body413.error, 'PAYLOAD_TOO_LARGE');
+
+    const res400 = await app.request('http://127.0.0.1:8080/api/resilience/probe-delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Lab-Router-Secret': TEST_ROUTER_SECRET
+      },
+      body: '{malformed-json'
+    });
+    assert.equal(res400.status, 400);
+    const body400 = (await res400.json()) as { error: string };
+    assert.equal(body400.error, 'INVALID_JSON');
+  });
 });
