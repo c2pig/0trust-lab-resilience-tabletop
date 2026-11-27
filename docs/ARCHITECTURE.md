@@ -135,3 +135,10 @@ flowchart TB
 - **Frontend Guard (`src/components/LabLeaseGuard.tsx`, re-exported via `src/shell/index.ts`)**: `src/App.tsx` wraps `<ResilienceTabletopPage>` with `<LabLeaseGuard labSlug="resilience-tabletop" labTitle="Chaos & Cyber Resilience Tabletop Simulator">`.
 - **Edge Enforcement (`0trust-lab-router` + `LabLeaseDO`)**: Queries `GET /api/lease/resilience-tabletop/status`, renders the explicit Cloudflare Turnstile widget (`0x4AAAAAAGVF1oWC5CsFWn-J`) when available, acquires an `HttpOnly; Secure; SameSite=Lax` lease cookie (`lab_lease_resilience-tabletop`) via `POST /api/lease/resilience-tabletop/acquire` (180s hard cap, 25 calls/lease, 200 calls/UTC day), shows a countdown lock screen when occupied, and exposes a floating `MM:SS + End Lab` pill while active.
 - **Zero Engine Changes**: All existing same-origin `/api/resilience-tabletop/*` requests carry the `HttpOnly` lease cookie automatically; local development (`localhost` / `127.0.0.1`) and disabled lease configs pass through transparently.
+
+---
+
+## Wave 1 Security & CI/CD Hardening
+- **Canonical Shell & Runtime Parity**: Synced `src/components/LabLeaseGuard.tsx`, `functions/api/_middleware.ts`, `functions/api/_telemetry.ts`, and `server/{kvAdapter,origin,runtime,index}.ts` from `c2pig/0trust.dev`.
+- **Bounded Ephemeral Fallback (`functions/api/resilience/probe-delete.ts`)**: `ephemeralResilienceStore` is strictly fallback-only when `STATE_KV` is unbound and enforces `3600s` TTL expiration + `256`-entry eviction.
+- **CI & Deploy Gating**: Added `.github/workflows/ci.yml` (`pull_request` -> `main` running `npm ci`, `tsc --noEmit`, `tsc -p tsconfig.server.json --noEmit`, `npm test`, `npm run build`) and gated both `deploy-pages` and `deploy-cloudrun` in `.github/workflows/deploy.yml` on `needs: test-and-build`.

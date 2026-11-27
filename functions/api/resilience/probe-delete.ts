@@ -41,6 +41,8 @@ interface ResilienceSessionKvRecord {
 
 const MAX_BODY_BYTES = 64 * 1024;
 const KV_TTL_SECONDS = 3600;
+const MAX_EPHEMERAL_ENTRIES = 256;
+const EPHEMERAL_TTL_MS = KV_TTL_SECONDS * 1000;
 const VALID_ACTIONS = new Set<ProbeAttemptedAction>([
   'DELETE',
   'BYPASS_GOVERNANCE',
@@ -48,7 +50,34 @@ const VALID_ACTIONS = new Set<ProbeAttemptedAction>([
 ]);
 const VALID_MODES = new Set<ProbeObjectLockMode>(['COMPLIANCE', 'GOVERNANCE', 'NONE']);
 
-const ephemeralResilienceStore = new Map<string, ResilienceSessionKvRecord>();
+const ephemeralResilienceStore = new Map<
+  string,
+  { record: ResilienceSessionKvRecord; expiresAt: number }
+>();
+
+function getEphemeralResilience(key: string): ResilienceSessionKvRecord | null {
+  const entry = ephemeralResilienceStore.get(key);
+  if (!entry) return null;
+  if (Date.now() > entry.expiresAt) {
+    ephemeralResilienceStore.delete(key);
+    return null;
+  }
+  return entry.record;
+}
+
+function setEphemeralResilience(key: string, record: ResilienceSessionKvRecord): void {
+  const now = Date.now();
+  for (const [k, v] of ephemeralResilienceStore) {
+    if (now > v.expiresAt) ephemeralResilienceStore.delete(k);
+  }
+  if (ephemeralResilienceStore.has(key)) ephemeralResilienceStore.delete(key);
+  while (ephemeralResilienceStore.size >= MAX_EPHEMERAL_ENTRIES) {
+    const oldest = ephemeralResilienceStore.keys().next().value;
+    if (oldest === undefined) break;
+    ephemeralResilienceStore.delete(oldest);
+  }
+  ephemeralResilienceStore.set(key, { record, expiresAt: now + EPHEMERAL_TTL_MS });
+}
 
 function jsonResponse(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -127,7 +156,7 @@ export async function onRequestPost(context: {
       existing = null;
     }
   } else {
-    existing = ephemeralResilienceStore.get(kvKey) || null;
+    existing = getEphemeralResilience(kvKey);
   }
 
   const prevBlocked = existing?.tamper_attempts_blocked ?? 0;
@@ -150,7 +179,7 @@ export async function onRequestPost(context: {
         expirationTtl: KV_TTL_SECONDS
       });
     } else {
-      ephemeralResilienceStore.set(kvKey, record);
+      setEphemeralResilience(kvKey, record);
     }
 
     return jsonResponse(
@@ -190,7 +219,7 @@ export async function onRequestPost(context: {
       expirationTtl: KV_TTL_SECONDS
     });
   } else {
-    ephemeralResilienceStore.set(kvKey, record);
+    setEphemeralResilience(kvKey, record);
   }
 
   return jsonResponse(
