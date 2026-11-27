@@ -142,3 +142,10 @@ flowchart TB
 - **Canonical Shell & Runtime Parity**: Synced `src/components/LabLeaseGuard.tsx`, `functions/api/_middleware.ts`, `functions/api/_telemetry.ts`, and `server/{kvAdapter,origin,runtime,index}.ts` from `c2pig/0trust.dev`.
 - **Bounded Ephemeral Fallback (`functions/api/resilience/probe-delete.ts`)**: `ephemeralResilienceStore` is strictly fallback-only when `STATE_KV` is unbound and enforces `3600s` TTL expiration + `256`-entry eviction.
 - **CI & Deploy Gating**: Added `.github/workflows/ci.yml` (`pull_request` -> `main` running `npm ci`, `tsc --noEmit`, `tsc -p tsconfig.server.json --noEmit`, `npm test`, `npm run build`) and gated both `deploy-pages` and `deploy-cloudrun` in `.github/workflows/deploy.yml` on `needs: test-and-build`.
+
+---
+
+## Wave 2 IaC Pinning & Terraform CI
+- **Immutable Module Pinning (`infra/terraform/main.tf`)**: Pinned all `c2pig/managed-infrastructure.git//modules/*` references (`cloudflare-pages-lab`, `cloud-run-lab`) to immutable tag `?ref=v1.0.0`, with multi-platform provider hashes (`linux_amd64`, `darwin_arm64`) committed in `infra/terraform/.terraform.lock.hcl`.
+- **Remote GCS State (`infra/terraform/backend.tf`)**: Verified `backend "gcs"` (`bucket = "0trust-dev-tfstate"`, `prefix = "labs/resilience-tabletop"`) alongside `required_version = ">= 1.9.0"`, `cloudflare ~> 5.0`, and `google ~> 6.0`.
+- **Terraform PR CI Validation (`.github/workflows/ci.yml`)**: Added a least-privilege `terraform-validate` job (`terraform_version: "1.11.4"`) executing `terraform fmt -check`, `terraform init -backend=false -input=false`, and `terraform validate` on every pull request targeting `main`.
