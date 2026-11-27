@@ -149,3 +149,5 @@ flowchart TB
 - **Immutable Module Pinning (`infra/terraform/main.tf`)**: Pinned all `c2pig/managed-infrastructure.git//modules/*` references (`cloudflare-pages-lab`, `cloud-run-lab`) to immutable tag `?ref=v1.0.0`, with multi-platform provider hashes (`linux_amd64`, `darwin_arm64`) committed in `infra/terraform/.terraform.lock.hcl`.
 - **Remote GCS State (`infra/terraform/backend.tf`)**: Verified `backend "gcs"` (`bucket = "0trust-dev-tfstate"`, `prefix = "labs/resilience-tabletop"`) alongside `required_version = ">= 1.9.0"`, `cloudflare ~> 5.0`, and `google ~> 6.0`.
 - **Terraform PR CI Validation (`.github/workflows/ci.yml`)**: Added a least-privilege `terraform-validate` job (`terraform_version: "1.11.4"`) executing `terraform fmt -check`, `terraform init -backend=false -input=false`, and `terraform validate` on every pull request targeting `main`.
+
+- **X-Ray Telemetry Drawer Theme**: Uses Chrome DevTools Light Mode palette (`#ffffff` / `#f1f3f4` surfaces, `#dadce0` borders, `#202124` / `#5f6368` text, `#1a73e8` active indicators) for high-contrast readability.
